@@ -1,8 +1,14 @@
 # Datasets for Long-Forecasting model category on Ready Tensor
 
-This repo contains files related to the datasets used for benchmarking models under the **Forecasting** category on Ready tensor. There are a total of 24 benchmarking datasets used in this category. Additionally, there is a 25th dataset for smoke testing of models. The list of datasets is as follows:
+This repo contains files related to the datasets used for benchmarking models under the **Forecasting** category on Ready tensor. There are a total of 6 benchmarking datasets used in this category each dataset has 4 versions for 4 different forecasting horizon values [96,192,336,720].
 | Dataset | Dataset Industry | Time Granularity | Series Length | # of Series | # Past Covariates | # Future Covariates | # Static Covariates |
 |-------------------------------------------------------|:---------------------------:|:----------------:|:-------------:|:-----------:|:-----------------:|:-------------------:|:-------------------:|
+| Electricty | Energy | hourly | 26,304 | 321 | 0 | 0 | 0 |
+| ETTh1 | Energy | hourly | 17,420 | 1 | 0 | 6 | 0 |
+| ETTh2 | Energy | hourly | 17,420 | 1 | 0 | 6 | 0 |
+| ETTm1 | Energy | other | 69680 | 1 | 0 | 6 | 0 |
+| ETTm2 | Energy | other | 69680 | 1 | 0 | 6 | 0 |
+| weather | Enivironmental Science | other | 5000 | 746 | 0 | 0 | 0 |
 
 
 More information about each dataset is provided in the sections below.
@@ -30,5 +36,160 @@ Below is the description of datasets in this repo. One of the datasets is a "smo
 
 ---
 
+## Electricity - X
 
+#### Alias (on scoreboards): electricity_forecast_len_X
 
+#### Domain / Industry: Energy
+
+#### Description
+
+The Electricity dataset contains hourly electricity consumption data from 321 different sites. The dataset has a total of 26,304 time points. The dataset does not contain any past or future covariates.
+
+#### Dataset characteristics
+
+- Number of series = 321
+- Series length = 26,304
+- Forecast length = 96, 192, 336, 720
+- Time granularity = Hourly
+- Number of past covariates = 0
+- Number of future covariates = 0
+- Number of static covariates = 0
+
+#### Attribution
+
+The dataset is sourced from the UCI Machine Learning Repository. The dataset is available at the following link: [UCI Machine Learning Repository - Electricity dataset](https://archive.ics.uci.edu/ml/datasets/ElectricityLoadDiagrams20112014)
+
+---
+
+## ETTh1 - X
+
+#### Alias (on scoreboards): etth1_forecast_len_X
+
+#### Domain / Industry: Energy
+
+#### Description
+
+The ETTh1 dataset contains hourly electricity consumption data from a single county in China. The dataset has a total of 17,420 time points. The dataset contains 6 future covariates.
+
+#### Dataset characteristics
+
+- Number of series = 1
+- Series length = 17,420
+- Forecast length = 96, 192, 336, 720
+- Time granularity = Hourly
+- Number of past covariates = 0
+- Number of future covariates = 6
+- Number of static covariates = 0
+
+#### Attribution
+
+- [Official Repository](https://github.com/zhouhaoyi/ETDataset)
+- [Research Paper](https://arxiv.org/abs/2012.07436)
+
+---
+
+## ETTh2 - X
+
+#### Alias (on scoreboards): etth2_forecast_len_X
+
+#### Domain / Industry: Energy
+
+#### Description
+
+The ETTh2 dataset contains hourly electricity consumption data from another county in China. The dataset has a total of 17,420 time points. The dataset contains 6 future covariates.
+
+#### Dataset characteristics
+
+- Number of series = 1
+- Series length = 17,420
+- Forecast length = 96, 192, 336, 720
+- Time granularity = Hourly
+- Number of past covariates = 0
+- Number of future covariates = 6
+- Number of static covariates = 0
+
+#### Attribution
+
+- [Official Repository](https://github.com/zhouhaoyi/ETDataset)
+- [Research Paper](https://arxiv.org/abs/2012.07436)
+
+---
+
+## ETTm1 - X
+
+#### Alias (on scoreboards): ettm1_forecast_len_X
+
+#### Domain / Industry: Energy
+
+#### Description
+
+The ETTm1 dataset contains electricity consumption data from a single county in China. The dataset has a total of 69,680 time points. The dataset contains 6 future covariates.
+
+#### Dataset characteristics
+
+- Number of series = 1
+- Series length = 69,680
+- Forecast length = 96, 192, 336, 720
+- Time granularity = 15 min
+- Number of past covariates = 0
+- Number of future covariates = 6
+- Number of static covariates = 0
+
+#### Attribution
+
+- [Official Repository](https://github.com/zhouhaoyi/ETDataset)
+- [Research Paper](https://arxiv.org/abs/2012.07436)
+
+---
+
+## ETTm2 - X
+
+#### Alias (on scoreboards): ettm2_forecast_len_X
+
+#### Domain / Industry: Energy
+
+#### Description
+
+The ETTm2 dataset contains electricity consumption data from another county in China. The dataset has a total of 69,680 time points. The dataset contains 6 future covariates.
+
+#### Dataset characteristics
+
+- Number of series = 1
+- Series length = 69,680
+- Forecast length = 96, 192, 336, 720
+- Time granularity = 15 min
+- Number of past covariates = 0
+- Number of future covariates = 6
+- Number of static covariates = 0
+
+#### Attribution
+
+- [Official Repository](https://github.com/zhouhaoyi/ETDataset)
+- [Research Paper](https://arxiv.org/abs/2012.07436)
+
+---
+
+## Weather - X
+
+#### Alias (on scoreboards): weather_forecast_len_X
+
+#### Domain / Industry: Enviromental Science
+
+#### Description
+
+The Weather dataset contains weather data from 746 different weather stations representing maxtemp measured at the weather stations in Australia. The dataset has a total of 5,000 time points by either slicing each series or padding if necessary. The dataset does not contain any past or future covariates.
+
+#### Dataset characteristics
+
+- Number of series = 746
+- Series length = 5,000
+- Forecast length = 96, 192, 336, 720
+- Time granularity = Other
+- Number of past covariates = 0
+- Number of future covariates = 0
+- Number of static covariates = 0
+
+#### Attribution
+
+The dataset is sourced from Monash Time Series Forecasting Repository. The dataset is available at the following link: [Monash Time Series Forecasting Repository - Weather dataset](https://zenodo.org/records/4654822)
