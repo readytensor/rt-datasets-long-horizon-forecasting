@@ -159,10 +159,10 @@ forecasting,electricity_forecast_len_96,1,series_id,id,TEXT,"Station id for each
 forecasting,electricity_forecast_len_96,2,timestamp,time,DATETIME,Time step number of observation.
 forecasting,electricity_forecast_len_96,3,consumption,target,NUMERIC,Target variable
 forecasting,electricity_forecast_len_192,1,series_id,id,TEXT,"Station id for each clients "
-forecasting,electricity_forecast_len_192,2,timestamp,time,DATE,Time step number of observation.
+forecasting,electricity_forecast_len_192,2,timestamp,time,DATETIME,Time step number of observation.
 forecasting,electricity_forecast_len_192,3,consumption,target,NUMERIC,Target variable
 forecasting,electricity_forecast_len_336,1,series_id,id,TEXT,"Station id for each clients "
-forecasting,electricity_forecast_len_336,2,timestamp,time,DATE,Time step number of observation.
+forecasting,electricity_forecast_len_336,2,timestamp,time,DATETIME,Time step number of observation.
 forecasting,electricity_forecast_len_336,3,consumption,target,NUMERIC,Target variable
 forecasting,electricity_forecast_len_720,1,series_id,id,TEXT,"Station id for each clients "
 forecasting,electricity_forecast_len_720,2,timestamp,time,DATETIME,Time step number of observation.
