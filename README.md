@@ -1,6 +1,6 @@
 # Datasets for Long-Forecasting model category on Ready Tensor
 
-This repo contains files related to the datasets used for benchmarking models under the **Forecasting** category on Ready tensor. There are a total of 6 benchmarking datasets used in this category each dataset has 4 versions for 4 different forecasting horizon values [96,192,336,720].
+This repo contains files related to the datasets used for benchmarking models under the **Forecasting** category on Ready tensor. There are a total of 7 benchmarking datasets used in this category each dataset has 4 versions for 4 different forecasting horizon values [96,192,336,720].
 | Dataset | Dataset Industry | Time Granularity | Series Length | # of Series | # Past Covariates | # Future Covariates | # Static Covariates |
 |-------------------------------------------------------|:---------------------------:|:----------------:|:-------------:|:-----------:|:-----------------:|:-------------------:|:-------------------:|
 | Electricity | Energy | hourly | 26,304 | 321 | 0 | 0 | 0 |
