@@ -15,8 +15,8 @@ forecasting,ettm2,1,series_id,id,TEXT,Unique series id representing the region a
 forecasting,ettm2,2,ds,time,DATETIME,The recorded datetime of observation
 forecasting,ettm2,3,y,target,NUMERIC,Recorded observation for the feature at the region.
 forecasting,weather,1,series_id,id,TEXT,Weather indicator
-forecasting,weather,2,date,time,INT,Time of weather observation
+forecasting,weather,2,date,time,DATETIME,Time of weather observation
 forecasting,weather,3,value,target,NUMERIC,Observed value for the weather indicator. 
 forecasting,traffic,1,series_id,id,TEXT,Freeway location unique id
-forecasting,traffic,2,timestamp,time,INT,Time of observation
+forecasting,traffic,2,timestamp,time,DATETIME,Time of observation
 forecasting,traffic,3,value,target,NUMERIC,Road occupancy value
