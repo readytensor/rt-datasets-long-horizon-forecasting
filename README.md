@@ -9,7 +9,7 @@ This repo contains files related to the datasets used for benchmarking models un
 | ETTm1 | Energy | 15-minutes | 69,680 | 7 | 0 | 0 | 0 |
 | ETTm2 | Energy | 15-minutes | 69,680 | 7 | 0 | 0 | 0 |
 | Traffic | Urban Planning | hourly | 17,544 | 862 | 0 | 0 | 0 |
-| Weather | Environmental Science | 10-minutes | 52,696 | 21 | 0 | 0 | 0 |
+| Weather | Environmental Science | 10-minutes | 52,695 | 21 | 0 | 0 | 0 |
 
 More information about each dataset is provided in the sections below.
 
@@ -49,7 +49,7 @@ The `Electricity` dataset represents the electricity consumption of 370 clients 
 
 - Number of series = 321
 - Series length = 26,304
-- Forecast length = 96, 192, 336, 720
+- Forecast lengths = 96, 192, 336, 720
 - Time granularity = Hourly
 - Number of past covariates = 0
 - Number of future covariates = 0
@@ -77,7 +77,7 @@ The Electricity Transformer Temperature (ETT) dataset is a crucial resource for 
 
 - Number of series = 7
 - Series length = 17,420
-- Forecast length = 96, 192, 336, 720
+- Forecast lengths = 96, 192, 336, 720
 - Time granularity = Hourly
 - Number of past covariates = 0
 - Number of future covariates = 0
@@ -104,7 +104,7 @@ The Electricity Transformer Temperature (ETT) dataset is a crucial resource for 
 
 - Number of series = 7
 - Series length = 17,420
-- Forecast length = 96, 192, 336, 720
+- Forecast lengths = 96, 192, 336, 720
 - Time granularity = Hourly
 - Number of past covariates = 0
 - Number of future covariates = 0
@@ -131,7 +131,7 @@ The Electricity Transformer Temperature (ETT) dataset is a crucial resource for 
 
 - Number of series = 7
 - Series length = 69,680
-- Forecast length = 96, 192, 336, 720
+- Forecast lengths = 96, 192, 336, 720
 - Time granularity = 15 minutes
 - Number of past covariates = 0
 - Number of future covariates = 0
@@ -158,7 +158,7 @@ The Electricity Transformer Temperature (ETT) dataset is a crucial resource for 
 
 - Number of series = 7
 - Series length = 69,680
-- Forecast length = 96, 192, 336, 720
+- Forecast lengths = 96, 192, 336, 720
 - Time granularity = 15 minutes
 - Number of past covariates = 0
 - Number of future covariates = 0
@@ -185,7 +185,7 @@ This dataset contains the San Francisco Traffic dataset used by Lai et al. (2017
 
 - Number of series = 862
 - Series length = 17,544
-- Forecast length = 96, 192, 336, 720
+- Forecast lengths = 96, 192, 336, 720
 - Time granularity = hourly
 - Number of past covariates = 0
 - Number of future covariates = 0
@@ -211,8 +211,8 @@ This is the `Weather` dataset sourced from the Max-Planck-Institut. It contains 
 #### Dataset characteristics
 
 - Number of series = 21
-- Series length = 52,696
-- Forecast length = 96, 192, 336, 720
+- Series length = 52,695
+- Forecast lengths = 96, 192, 336, 720
 - Time granularity = 10-minutes
 - Number of past covariates = 0
 - Number of future covariates = 0
