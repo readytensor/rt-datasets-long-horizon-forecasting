@@ -1,0 +1,22 @@
+model_category,name,field_num,field_name,field_type,data_type,field_description
+forecasting,electricity,1,series_id,id,TEXT,Unique series id
+forecasting,electricity,2,ds,time,DATETIME,Time step of observation.
+forecasting,electricity,3,y,target,NUMERIC,Target variable
+forecasting,etth1,1,series_id,id,TEXT,Unique series id representing the region and feature being measured.
+forecasting,etth1,2,ds,time,DATETIME,The recorded datetime of observation
+forecasting,etth1,3,y,target,NUMERIC,Recorded observation for the feature at the region.
+forecasting,etth2,1,series_id,id,TEXT,Unique series id representing the region and feature being measured.
+forecasting,etth2,2,ds,time,DATETIME,The recorded datetime of observation
+forecasting,etth2,3,y,target,NUMERIC,Recorded observation for the feature at the region.
+forecasting,ettm1,1,series_id,id,TEXT,Unique series id representing the region and feature being measured.
+forecasting,ettm1,2,ds,time,DATETIME,The recorded datetime of observation
+forecasting,ettm1,3,y,target,NUMERIC,Recorded observation for the feature at the region.
+forecasting,ettm2,1,series_id,id,TEXT,Unique series id representing the region and feature being measured.
+forecasting,ettm2,2,ds,time,DATETIME,The recorded datetime of observation
+forecasting,ettm2,3,y,target,NUMERIC,Recorded observation for the feature at the region.
+forecasting,weather,1,series_id,id,TEXT,Weather indicator
+forecasting,weather,2,date,time,INT,Time of weather observation
+forecasting,weather,3,value,target,NUMERIC,Observed value for the weather indicator. 
+forecasting,traffic,1,series_id,id,TEXT,Freeway location unique id
+forecasting,traffic,2,timestamp,time,INT,Time of observation
+forecasting,traffic,3,value,target,NUMERIC,Road occupancy value
