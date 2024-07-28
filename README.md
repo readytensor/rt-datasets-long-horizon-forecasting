@@ -224,3 +224,11 @@ Dataset info here: https://paperswithcode.com/dataset/weather-ltsf
 
 Dataset can be downloaded from here:
 https://drive.google.com/file/d/1Tc7GeVN7DLEl-RAs-JVwG9yFMf--S8dy/view
+
+## License
+
+The code in this repository is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+
+The datasets included in this repository are provided for convenience and are subject to their respective licenses as provided by the original authors and distributors. For more details on the licenses and to access the original datasets, please refer to the original sources as mentioned in the dataset descriptions above.
+
+Please ensure compliance with the respective licenses when using these datasets.
