@@ -82,10 +82,7 @@ def get_etth_datasets(dataset_name: str, save_dir: str = paths.raw_datasets_path
 def get_weather_dataset(dataset_name: str, raw_dir: str = paths.raw_datasets_path):
     raw_data_fpath = os.path.join(raw_dir, "weather", "weather.csv")
     weather_df = pd.read_csv(raw_data_fpath, encoding="latin-1", parse_dates=["date"])
-    print(weather_df.shape)
     weather_df = weather_df.drop_duplicates()
-    print(weather_df.shape)
-    exit()
     unpivoted_weather_df = weather_df.melt(
         id_vars=["date"], var_name="series_id", value_name="value"
     )
