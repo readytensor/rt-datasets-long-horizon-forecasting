@@ -30,12 +30,12 @@ def preprocess_and_unpivot_dataset(dataset: pd.DataFrame) -> pd.DataFrame:
     return unpivoted
 
 
-def get_electricity_dataset(
+def get_electricity_or_traffic_dataset(
         dataset_name: str,
         raw_dir_path: str = os.path.join(paths.raw_datasets_path)
     ):
     """
-    Loads, preprocesses, and unpivots an electricity dataset.
+    Loads, preprocesses, and unpivots the dataset. Also renames certain series for convenience.
 
     The dataset is first loaded from the specified directory. Then, the columns are renamed
     to have a prefix "ser_" for all columns except "date". The dataset is then preprocessed
@@ -101,7 +101,7 @@ def get_main_dataset_df(dataset_name):
     Returns:
         d.DataFrame): Loaded dataframe
     """
-    if dataset_name == "electricity":
-        return get_electricity_dataset(dataset_name)
+    if dataset_name in ["electricity", "traffic"]:
+        return get_electricity_or_traffic_dataset(dataset_name)
     else:
         return get_dataset(dataset_name)
