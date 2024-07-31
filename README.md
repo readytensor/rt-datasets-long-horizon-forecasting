@@ -59,7 +59,8 @@ The `Electricity` dataset represents the electricity consumption of 370 clients 
 
 The dataset is sourced from the UCI Machine Learning Repository. The original dataset is available at the following link: [UCI Machine Learning Repository - Electricity dataset](https://archive.ics.uci.edu/ml/datasets/ElectricityLoadDiagrams20112014)
 
-The aggregated dataset is sourced from the GluonTS package. See script `src/process_datasets.py` for more details.
+The aggregated dataset is sourced from here:
+https://drive.google.com/drive/folders/1ZOYpTUa82_jCcxIdTmyr0LXQfvaM9vIy
 
 ---
 
@@ -87,6 +88,7 @@ The Electricity Transformer Temperature (ETT) dataset is a crucial resource for 
 
 - [Official Repository](https://github.com/zhouhaoyi/ETDataset)
 - [Research Paper](https://arxiv.org/abs/2012.07436)
+- [Dataset Download](https://drive.google.com/drive/folders/1ZoYpTUa82_jCcxIdTmyr0LXQfvaM9vIy)
 
 ---
 
@@ -114,6 +116,7 @@ The Electricity Transformer Temperature (ETT) dataset is a crucial resource for 
 
 - [Official Repository](https://github.com/zhouhaoyi/ETDataset)
 - [Research Paper](https://arxiv.org/abs/2012.07436)
+- [Dataset Download](https://drive.google.com/drive/folders/1ZoYpTUa82_jCcxIdTmyr0LXQfvaM9vIy)
 
 ---
 
@@ -141,6 +144,7 @@ The Electricity Transformer Temperature (ETT) dataset is a crucial resource for 
 
 - [Official Repository](https://github.com/zhouhaoyi/ETDataset)
 - [Research Paper](https://arxiv.org/abs/2012.07436)
+- [Dataset Download](https://drive.google.com/drive/folders/1ZoYpTUa82_jCcxIdTmyr0LXQfvaM9vIy)
 
 ---
 
@@ -168,6 +172,7 @@ The Electricity Transformer Temperature (ETT) dataset is a crucial resource for 
 
 - [Official Repository](https://github.com/zhouhaoyi/ETDataset)
 - [Research Paper](https://arxiv.org/abs/2012.07436)
+- [Dataset Download](https://drive.google.com/drive/folders/1ZoYpTUa82_jCcxIdTmyr0LXQfvaM9vIy)
 
 ---
 
@@ -196,6 +201,8 @@ This dataset contains the San Francisco Traffic dataset used by Lai et al. (2017
 Dataset can be sourced from here: https://zenodo.org/records/4656132
 DOI: 10.5281/zenodo.4656132
 
+[Dataset Download](https://drive.google.com/drive/folders/1ZoYpTUa82_jCcxIdTmyr0LXQfvaM9vIy)
+
 ---
 
 ## Weather - X
@@ -222,8 +229,7 @@ This is the `Weather` dataset sourced from the Max-Planck-Institut. It contains 
 
 Dataset info here: https://paperswithcode.com/dataset/weather-ltsf
 
-Dataset can be downloaded from here:
-https://drive.google.com/file/d/1Tc7GeVN7DLEl-RAs-JVwG9yFMf--S8dy/view
+[Dataset Download](https://drive.google.com/drive/folders/1ZoYpTUa82_jCcxIdTmyr0LXQfvaM9vIy)
 
 ## License
 
