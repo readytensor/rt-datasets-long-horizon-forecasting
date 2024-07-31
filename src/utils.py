@@ -53,21 +53,19 @@ def load_features_config(features_cfg_path: str) -> pd.DataFrame:
     return data_features_config
 
 
-def load_dataset(dataset_name: str, processed_datasets_path: str) -> pd.DataFrame:
+def load_dataset(dataset_name: str, dir_path: str) -> pd.DataFrame:
     """
     Read dataset
 
     Args:
     dataset_name (str): Name of the dataset.
-    processed_datasets_path (str): Path where processed data files are to be saved per dataset.
+    dir_path (str): Path where processed data files are to be saved per dataset.
 
     Returns:
     pd.DataFrame: The data features configuration.
     """
     # Base dataset path without extension
-    base_dataset_path = os.path.join(
-        processed_datasets_path, dataset_name, f"{dataset_name}.csv"
-    )
+    base_dataset_path = os.path.join(dir_path, dataset_name, f"{dataset_name}.csv")
 
     # List of possible file extensions
     possible_extensions = ["", ".gz", ".zip"]

@@ -2,6 +2,7 @@ import os
 import pandas as pd
 from pandas import DataFrame
 from typing import List
+from sklearn.preprocessing import StandardScaler
 
 import utils
 import paths
@@ -66,10 +67,6 @@ def get_past_covariates(schema: dict) -> list:
         list: A list containing the names of all past covariates. Returns
         an empty list if there are no past covariates in the schema.
 
-    Example:
-        schema = { ... }  # your schema dictionary
-        past_covariates = get_past_covariates(schema)
-        print(past_covariates)
     """
     # Check if 'pastCovariates' exists in the schema and is a list
     if "pastCovariates" in schema and isinstance(schema["pastCovariates"], list):
@@ -109,13 +106,20 @@ def save_test_key_data(
     )
 
 
+from sklearn.preprocessing import StandardScaler
+import pandas as pd
+
+
+grouped_datasets = {}
+
 def create_train_test_testkey_files_for_dataset(
-    dataset: pd.DataFrame,
-    dataset_name: str,
-    schema: dict,
-    dataset_cfg: pd.Series,
-    save_dir: str,
-) -> None:
+        fold_num: int,
+        dataset: pd.DataFrame,
+        dataset_name: str,
+        schema: dict,
+        dataset_cfg: pd.Series,
+        save_dir: str,
+    ) -> None:
     """
     Creates train, test, and test key files for each dataset marked for use in the metadata.
     """
@@ -124,26 +128,54 @@ def create_train_test_testkey_files_for_dataset(
         return
 
     forecast_length = schema["forecastLength"]
-    dataset_name_with_forecast_len = dataset_name + f"_forecast_len_{forecast_length}"
-
-    print("Creating train/test files for dataset:", dataset_name_with_forecast_len)
+    dataset_variant_name = (
+        dataset_name + f"_fcst_len_{forecast_length}"
+        + f"_fold_{fold_num}"
+    )
+    print("Creating train/test files for dataset:", dataset_variant_name)
 
     if schema["timeField"]["dataType"] != "INT":
         dataset[schema["timeField"]["name"]] = pd.to_datetime(
             dataset[schema["timeField"]["name"]]
         )
 
-    grouped = dataset.groupby(schema["idField"]["name"])
+    if dataset_name not in grouped_datasets:
+        grouped_datasets[dataset_name] = dataset.groupby(schema["idField"]["name"])
 
-    train_dfs = [group.iloc[:-forecast_length] for _, group in grouped]
-    test_dfs = [group.iloc[-forecast_length:] for _, group in grouped]
+    kfold_roll_window_size = dataset_cfg["kfold_roll_window_size"]
+    grouped = grouped_datasets[dataset_name]
+    series_len = grouped.size().iloc[0]
+    train_end = series_len - (5 - fold_num) * kfold_roll_window_size - forecast_length
+
+    # Extract the target column for scaling
+    target_col = schema["forecastTarget"]["name"]
+
+    train_dfs = []
+    test_dfs = []
+    for _, group in grouped:
+        # Split the group into train and test sets
+        train_data = group.iloc[:train_end]
+        test_data = group.iloc[train_end:train_end+forecast_length]
+
+        # Apply standard scaling to the target column in train data
+        scaler = StandardScaler()
+        train_target_scaled = scaler.fit_transform(train_data[[target_col]])
+        test_target_scaled = scaler.transform(test_data[[target_col]])
+
+        # Replace the original target column with the scaled values
+        train_data.loc[:, target_col] = train_target_scaled.round(5)
+        test_data.loc[:, target_col] = test_target_scaled.round(5)
+
+        # Append the scaled data to the list
+        train_dfs.append(train_data)
+        test_dfs.append(test_data)
 
     # Concatenate all the train and test splits into two DataFrames
     train_df = pd.concat(train_dfs)
     test_df = pd.concat(test_dfs)
 
     # Save train/test data
-    save_train_data(train_df, dataset_name_with_forecast_len, save_dir, compression="")
+    save_train_data(train_df, dataset_variant_name, save_dir, compression="")
 
     # Save test data without target
     past_covariates = get_past_covariates(schema)
@@ -151,7 +183,7 @@ def create_train_test_testkey_files_for_dataset(
         test_df,
         schema["forecastTarget"]["name"],
         past_covariates,  # these will be dropped from the test data
-        dataset_name_with_forecast_len,
+        dataset_variant_name,
         save_dir,
         compression="",
     )
@@ -162,7 +194,7 @@ def create_train_test_testkey_files_for_dataset(
         schema["idField"]["name"],
         schema["timeField"]["name"],
         schema["forecastTarget"]["name"],
-        dataset_name_with_forecast_len,
+        dataset_variant_name,
         save_dir,
         compression="",
     )
@@ -189,7 +221,6 @@ def create_train_test_testkey_files(
 
         if dataset_name.startswith("store_sales"):
             continue
-        print("Creating train/test files for dataset:", dataset_name)
 
         # Read dataset
         dataset = utils.load_dataset(dataset_name, processed_datasets_path)

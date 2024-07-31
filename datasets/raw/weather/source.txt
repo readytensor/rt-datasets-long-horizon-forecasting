@@ -1,4 +1,0 @@
-Dataset info here: https://paperswithcode.com/dataset/weather-ltsf
-
-Dataset can be downloaded from here: 
-https://drive.google.com/file/d/1Tc7GeVN7DLEl-RAs-JVwG9yFMf--S8dy/view

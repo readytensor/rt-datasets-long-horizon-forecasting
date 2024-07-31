@@ -170,16 +170,18 @@ def create_feature_section(
 
 
 def generate_schema(
-    dataset: pd.DataFrame,
-    dataset_cfg: pd.Series,
-    features_config: pd.DataFrame,
-    forecast_len: int,
-    save_dir: str,
-):
+        dataset_variant_name: str,
+        dataset: pd.DataFrame,
+        dataset_cfg: pd.Series,
+        features_config: pd.DataFrame,
+        forecast_len: int,
+        save_dir: str,
+    ):
     """
     Generate the schema for each dataset.
 
     Args:
+        dataset_variant_name (str): The name of the dataset.
         dataset (pd.DataFrame): The dataset.
         dataset_cfg (pd.DataFrame): The metadata for all the datasets.
         features_config (pd.DataFrame): The features configuration data.
@@ -193,8 +195,7 @@ def generate_schema(
     desc_suffix = f" In this specific variation, the test set is designed to use a forecast length of {forecast_len} time steps."
 
     dataset_name = dataset_cfg["name"].strip()
-    dataset_name_with_forecast_len = dataset_name + f"_forecast_len_{forecast_len}"
-    print("Creating schema for dataset", dataset_name_with_forecast_len)
+    print("Creating schema for dataset", dataset_variant_name)
     schema = {}
     schema["title"] = dataset_cfg["title"] + f" Forecast Length {forecast_len}"
     schema["description"] = dataset_cfg["description"] + desc_suffix
@@ -227,7 +228,7 @@ def generate_schema(
     # Write the schemas in JSON format to disk
     os.makedirs(save_dir, exist_ok=True)
     output_fpath = os.path.join(
-        save_dir, f"{dataset_name_with_forecast_len}_schema.json"
+        save_dir, f"{dataset_variant_name}_schema.json"
     )
     with open(output_fpath, "w", encoding="utf-8") as file_:
         json.dump(schema, file_, cls=JSONEncoder, indent=2)

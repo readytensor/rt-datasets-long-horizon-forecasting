@@ -21,33 +21,37 @@ def run_all():
         main_dataset_df = get_main_dataset_df(dataset_name=dataset_name)
 
         for forecast_len in FORECAST_LENS:
-            dataset_name_with_forecast_len = (
-                dataset_name + f"_forecast_len_{forecast_len}"
-            )
-            save_dir = os.path.join(
-                paths.processed_datasets_path, dataset_name_with_forecast_len
-            )
-            save_dataset(
-                dataset_name=dataset_name_with_forecast_len,
-                main_dataset_df=main_dataset_df,
-                save_dir=save_dir,
-            )
+            for fold_num in range(1, 6):
+                dataset_variant_name = (
+                    dataset_name + f"_fcst_len_{forecast_len}"
+                    + f"_fold_{fold_num}"
+                )
+                save_dir = os.path.join(
+                    paths.processed_datasets_path, dataset_variant_name
+                )
+                save_dataset(
+                    dataset_name=dataset_variant_name,
+                    main_dataset_df=main_dataset_df,
+                    save_dir=save_dir,
+                )
 
-            schema = generate_schema(
-                dataset=main_dataset_df,
-                dataset_cfg=dataset_row,
-                features_config=features_config,
-                forecast_len=forecast_len,
-                save_dir=save_dir,
-            )
+                schema = generate_schema(
+                    dataset_variant_name=dataset_variant_name,
+                    dataset=main_dataset_df,
+                    dataset_cfg=dataset_row,
+                    features_config=features_config,
+                    forecast_len=forecast_len,
+                    save_dir=save_dir,
+                )
 
-            create_train_test_testkey_files_for_dataset(
-                dataset=main_dataset_df,
-                dataset_name=dataset_name,
-                schema=schema,
-                dataset_cfg=dataset_row,
-                save_dir=save_dir,
-            )
+                create_train_test_testkey_files_for_dataset(
+                    fold_num=fold_num,
+                    dataset=main_dataset_df,
+                    dataset_name=dataset_name,
+                    schema=schema,
+                    dataset_cfg=dataset_row,
+                    save_dir=save_dir,
+                )
 
 
 if __name__ == "__main__":

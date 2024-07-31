@@ -1,123 +1,79 @@
 import os
 import pandas as pd
-from pathlib import Path
-from datetime import timedelta, datetime
-from gluonts.dataset.repository import get_dataset, dataset_names
 
 import paths
+from utils import load_dataset
+
+
+def preprocess_and_unpivot_dataset(dataset: pd.DataFrame) -> pd.DataFrame:
+    """
+    Preprocesses the given dataset and unpivots it from wide to long format.
+
+    The preprocessing steps include:
+    1. Renaming the "date" column to "dt".
+    2. Converting the "dt" column to datetime format.
+    3. Dropping duplicate rows.
+
+    The unpivoting step transforms the dataset such that each row contains a single observation,
+    with columns for date ("dt"), series identifier ("series_id"), and the observed value ("value").
+
+    Args:
+        dataset (pd.DataFrame): The input dataset to preprocess and unpivot.
+
+    Returns:
+        pd.DataFrame: The preprocessed and unpivoted dataset.
+    """
+    dataset.rename(columns={"date": "dt"}, inplace=True)
+    dataset["dt"] = pd.to_datetime(dataset["dt"])
+    dataset = dataset.drop_duplicates()
+    unpivoted = dataset.melt(id_vars=["dt"], var_name="series_id", value_name="value")
+    return unpivoted
 
 
 def get_electricity_dataset(
-    dataset_name: str, save_dir: str = os.path.join(paths.raw_datasets_path)
-):
-    gluon_ts_dataset_name = "electricity_hourly"
-    dataset_path = Path(os.path.join(save_dir, gluon_ts_dataset_name))
-    gluonts_dataset = get_dataset(
-        gluon_ts_dataset_name, regenerate=False, path=dataset_path
-    )
-    test_data = pd.DataFrame(gluonts_dataset.test)
-    all_ts = []
-    for idx, ts in test_data.iterrows():
-        start_time = ts["start"]
-        values = ts["target"]
-        # Create a DataFrame for the current series
-        temp_df = pd.DataFrame(
-            {
-                "series_id": ts["item_id"],
-                "ds": pd.date_range(
-                    start=start_time.to_timestamp(),
-                    periods=len(values),
-                    freq=start_time.freq,
-                ),
-                "y": ts["target"],
-            }
-        )
-        all_ts.append(temp_df)
+        dataset_name: str,
+        raw_dir_path: str = os.path.join(paths.raw_datasets_path)
+    ):
+    """
+    Loads, preprocesses, and unpivots an electricity dataset.
 
-    all_ts_df = pd.concat(all_ts)
-    return all_ts_df
+    The dataset is first loaded from the specified directory. Then, the columns are renamed
+    to have a prefix "ser_" for all columns except "date". The dataset is then preprocessed
+    and unpivoted using the `preprocess_and_unpivot_dataset` function.
+
+    Args:
+        dataset_name (str): The name of the dataset to load.
+        raw_dir_path (str): The path to the directory containing the raw dataset.
+
+    Returns:
+        pd.DataFrame: The preprocessed and unpivoted electricity dataset.
+    """
+    dataset = load_dataset(dataset_name=dataset_name, dir_path=raw_dir_path)
+    dataset.columns = [f"ser_{c}" if c != "date" else "date" for c in dataset.columns]
+    unpivoted = preprocess_and_unpivot_dataset(dataset)
+    return unpivoted
 
 
-def get_etth_datasets(dataset_name: str, save_dir: str = paths.raw_datasets_path):
-    if dataset_name in ["etth1", "etth2"]:
-        gluonts_dataset_name = "ett_small_1h"
-    elif dataset_name in ["ettm1", "ettm2"]:
-        gluonts_dataset_name = "ett_small_15min"
-    else:
-        raise ValueError(f"Unrecognized variant name for ETT dataset: {dataset_name}")
+def get_dataset(
+        dataset_name: str,
+        raw_dir_path: str = os.path.join(paths.raw_datasets_path)
+    ):
+    """
+    Loads, preprocesses, and unpivots a generic dataset.
 
-    dataset_path = Path(os.path.join(save_dir, gluonts_dataset_name))
-    gluonts_dataset = get_dataset(
-        gluonts_dataset_name, regenerate=False, path=dataset_path
-    )
-    # print(gluonts_dataset.metadata.json())
-    test_data = pd.DataFrame(gluonts_dataset.test)
-    if dataset_name in ["etth1", "ettm1"]:
-        test_data = test_data.iloc[:7]
-    else:
-        test_data = test_data.iloc[7:]
+    The dataset is first loaded from the specified directory. It is then preprocessed
+    and unpivoted using the `preprocess_and_unpivot_dataset` function.
 
-    all_ts = []
-    for idx, ts in test_data.iterrows():
-        start_time = ts["start"]
-        values = ts["target"]
-        # Create a DataFrame for the current series
-        temp_df = pd.DataFrame(
-            {
-                "series_id": ts["item_id"],
-                "ds": pd.date_range(
-                    start=start_time.to_timestamp(),
-                    periods=len(values),
-                    freq=start_time.freq,
-                ),
-                "y": ts["target"],
-            }
-        )
-        all_ts.append(temp_df)
+    Args:
+        dataset_name (str): The name of the dataset to load.
+        raw_dir_path (str): The path to the directory containing the raw dataset.
 
-    all_ts_df = pd.concat(all_ts)
-    return all_ts_df
-
-
-def get_weather_dataset(dataset_name: str, raw_dir: str = paths.raw_datasets_path):
-    raw_data_fpath = os.path.join(raw_dir, "weather", "weather.csv")
-    weather_df = pd.read_csv(raw_data_fpath, encoding="latin-1", parse_dates=["date"])
-    weather_df = weather_df.drop_duplicates()
-    unpivoted_weather_df = weather_df.melt(
-        id_vars=["date"], var_name="series_id", value_name="value"
-    )
-    return unpivoted_weather_df
-
-
-def get_traffic_dataset(raw_dir: str = paths.raw_datasets_path):
-    raw_data_fpath = os.path.join(
-        raw_dir, "traffic", "traffic_hourly_dataset", "traffic_hourly_dataset.tsf"
-    )
-    with open(raw_data_fpath, "r") as file:
-        lines = file.readlines()
-
-    data_started = False
-    data = []
-
-    for line in lines:
-        line = line.strip()
-        if not data_started:
-            if line.startswith("@data"):
-                data_started = True
-            continue
-
-        series_name, rest = line.split(":", 1)
-        start_timestamp_str, values_str = rest.split(":", 1)
-
-        start_timestamp = datetime.strptime(start_timestamp_str, "%Y-%m-%d %H-%M-%S")
-        values = [float(v) for v in values_str.split(",")]
-
-        for i, value in enumerate(values):
-            timestamp = start_timestamp + timedelta(hours=i)
-            data.append((series_name, timestamp, value))
-
-    df = pd.DataFrame(data, columns=["series_id", "timestamp", "value"])
-    return df
+    Returns:
+        pd.DataFrame: The preprocessed and unpivoted dataset.
+    """
+    dataset = load_dataset(dataset_name=dataset_name, dir_path=raw_dir_path)
+    unpivoted = preprocess_and_unpivot_dataset(dataset)
+    return unpivoted
 
 
 def save_dataset(main_dataset_df: pd.DataFrame, dataset_name: str, save_dir: str):
@@ -137,13 +93,15 @@ def save_dataset(main_dataset_df: pd.DataFrame, dataset_name: str, save_dir: str
 
 
 def get_main_dataset_df(dataset_name):
+    """Load, process and return dataset
+
+    Args:
+        dataset_name (_type_): Name of dataset to load
+
+    Returns:
+        d.DataFrame): Loaded dataframe
+    """
     if dataset_name == "electricity":
         return get_electricity_dataset(dataset_name)
-    elif dataset_name in ["etth1", "etth2", "ettm1", "ettm2"]:
-        return get_etth_datasets(dataset_name)
-    elif dataset_name == "weather":
-        return get_weather_dataset(dataset_name)
-    elif dataset_name == "traffic":
-        return get_traffic_dataset()
     else:
-        raise ValueError(f"Unrecognized dataset: {dataset_name}")
+        return get_dataset(dataset_name)
